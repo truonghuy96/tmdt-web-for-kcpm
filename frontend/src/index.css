@@ -1,0 +1,467 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800;900&family=JetBrains+Mono:wght@700&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Geist", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --animate-fade-in: fade-in 0.15s ease-out;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Ngăn chặn bôi đen và kéo thả các tài nguyên giao diện chung */
+button, svg, img, input[type="range"], .select-none {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-drag: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Glassmorphism custom classes */
+.glass-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.glass-card-dark {
+  background: rgba(13, 15, 17, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.aurora-blur {
+  filter: blur(120px);
+}
+
+/* ============================================================
+   ANIMATIONS — Extended keyframes library
+   ============================================================ */
+
+/* Drift (ambient background blobs) */
+@keyframes drift {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -50px) scale(1.15); }
+  100% { transform: translate(-20px, 30px) scale(0.9); }
+}
+
+.animate-drift-slow {
+  animation: drift 25s infinite alternate ease-in-out;
+}
+
+.animate-drift-medium {
+  animation: drift 18s infinite alternate-reverse ease-in-out;
+}
+
+/* Marquee (ticker text) */
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+/* ── Slide Up (section scroll-reveal entrance) ── */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Scale Pop (badge / notification appear) ── */
+@keyframes scale-pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  70% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-scale-pop {
+  animation: scale-pop 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Shimmer (price / card highlight) ── */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+/* ── Glow Pulse (badge / icon glow) ── */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* ── Header shrink transition helper ── */
+@keyframes header-shrink {
+  from { height: 72px; }
+  to { height: 56px; }
+}
+
+/* ── Stagger delay utilities (for nav items, cart items) ── */
+.stagger-1 { animation-delay: 0.04s; }
+.stagger-2 { animation-delay: 0.08s; }
+.stagger-3 { animation-delay: 0.12s; }
+.stagger-4 { animation-delay: 0.16s; }
+.stagger-5 { animation-delay: 0.20s; }
+.stagger-6 { animation-delay: 0.24s; }
+.stagger-7 { animation-delay: 0.28s; }
+.stagger-8 { animation-delay: 0.32s; }
+
+/* ── Hover lift utility ── */
+.hover-lift {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* ── Reveal on scroll (class toggled by IntersectionObserver) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+
+/* Hide scrollbars globally for an immersive application feel */
+html,
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Minimalist scrollbar for inner scrollable containers */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.12) transparent;
+}
+
+/* ============================================================
+   ADMIN DASHBOARD — Dark Mode Override Styles
+   ============================================================ */
+.admin-dashboard-root.dark {
+  background-image: linear-gradient(to bottom, #171717, #6d6d6d, #949494);
+  color: #f1f5f9 !important;
+}
+
+/* Sidebar aside element styling */
+.admin-dashboard-root.dark aside {
+  background-color: transparent !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* White boxes, cards, and stat panels */
+.admin-dashboard-root.dark .bg-white,
+.admin-dashboard-root.dark .bg-gray-50,
+.admin-dashboard-root.dark td,
+.admin-dashboard-root.dark th,
+.admin-dashboard-root.dark tr {
+  background-color: #161b22 !important;
+  border-color: #30363d !important;
+  color: #e2e8f0 !important;
+}
+
+.admin-dashboard-root.dark table th {
+  background-color: #0d1117 !important;
+  color: #8b949e !important;
+}
+
+/* Table hover row effect */
+.admin-dashboard-root.dark tbody tr:hover,
+.admin-dashboard-root.dark tbody tr:hover td {
+  background-color: #21262d !important;
+}
+
+/* Heading texts */
+.admin-dashboard-root.dark h1,
+.admin-dashboard-root.dark h2,
+.admin-dashboard-root.dark h3,
+.admin-dashboard-root.dark h4,
+.admin-dashboard-root.dark strong {
+  color: #ffffff !important;
+}
+
+/* Helper small texts */
+.admin-dashboard-root.dark .text-gray-400,
+.admin-dashboard-root.dark .text-gray-405,
+.admin-dashboard-root.dark .text-gray-450,
+.admin-dashboard-root.dark .text-gray-500,
+.admin-dashboard-root.dark .text-gray-600,
+.admin-dashboard-root.dark p,
+.admin-dashboard-root.dark span.text-gray-400,
+.admin-dashboard-root.dark span.text-gray-500 {
+  color: #8b949e !important;
+}
+
+/* Inputs and select options */
+.admin-dashboard-root.dark input:not(.bg-transparent),
+.admin-dashboard-root.dark select:not(.bg-transparent),
+.admin-dashboard-root.dark textarea:not(.bg-transparent) {
+  background-color: #0d1117 !important;
+  border-color: #30363d !important;
+  color: #ffffff !important;
+}
+
+.admin-dashboard-root.dark input:not(.bg-transparent):focus,
+.admin-dashboard-root.dark select:not(.bg-transparent):focus,
+.admin-dashboard-root.dark textarea:not(.bg-transparent):focus {
+  border-color: #ffffff !important;
+  outline: none !important;
+}
+
+/* Modals background and overlay */
+.admin-dashboard-root.dark .fixed.inset-0.bg-black\/40 {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Badge tags */
+.admin-dashboard-root.dark .bg-gray-100 {
+  background-color: #30363d !important;
+  color: #e2e8f0 !important;
+}
+
+.admin-dashboard-root.dark .bg-indigo-50 {
+  background-color: rgba(79, 70, 229, 0.15) !important;
+  color: #a5b4fc !important;
+  border-color: rgba(79, 70, 229, 0.25) !important;
+}
+
+.admin-dashboard-root.dark .bg-indigo-50\/50 {
+  background-color: rgba(79, 70, 229, 0.08) !important;
+  color: #a5b4fc !important;
+}
+
+.admin-dashboard-root.dark .text-indigo-700 {
+  color: #a5b4fc !important;
+}
+
+
+/* Escape ký tự [ ] và # theo chuẩn CSS */
+.admin-dashboard-root.dark .\text-\[\#6366f1\] {
+  color: #a5b4fc !important;
+}
+
+/* Buttons */
+.admin-dashboard-root.dark button.bg-black {
+  background-color: #4f46e5 !important;
+  color: #ffffff !important;
+}
+
+.admin-dashboard-root.dark button.bg-black:hover {
+  background-color: #4338ca !important;
+}
+
+/* Image mix-blend-multiply reset for dark theme */
+.admin-dashboard-root.dark img.mix-blend-multiply {
+  mix-blend-mode: normal !important;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 6px;
+}
+
+/* Admin stat card hover lift */
+.admin-stat-card {
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.admin-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Admin tab content transition wrapper */
+.admin-tab-content {
+  animation: slide-up 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ============================================================
+   CONTACT PAGE — Special Submit Button
+   ============================================================ */
+.contact-submit-btn {
+  position: relative;
+  text-decoration: none;
+  color: #e8e8e8;
+  padding: 15px 30px;
+  width: 100%;
+  height: 60px;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  overflow: hidden;
+  background: #000000;
+  transition: all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-submit-btn span {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.contact-submit-btn:hover {
+  background: linear-gradient(-45deg, #ffffff 40%, #c1c1c1 80%) !important;
+  box-shadow: 0 0 30px rgba(184, 184, 184, 0.4), 0 0 30px rgba(183, 183, 183, 0.4);
+  color: #000000 !important;
+}
+
+.contact-submit-btn::before,
+.contact-submit-btn::after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.contact-submit-btn::before {
+  top: 0;
+  left: 0;
+  border-top: 2px solid #e8e8e8;
+  border-left: 2px solid #e8e8e8;
+}
+
+.contact-submit-btn::after {
+  bottom: 0;
+  right: 0;
+  border-bottom: 2px solid #e8e8e8;
+  border-right: 2px solid #e8e8e8;
+}
+
+.contact-submit-btn:hover::before,
+.contact-submit-btn:hover::after {
+  width: 100%;
+  height: 100%;
+}
+
+.contact-submit-btn:active {
+  scale: 0.97;
+  box-shadow: 0 0 15px rgba(117, 117, 117, 0.4), 0 0 15px rgba(211, 211, 211, 0.4);
+}
+
+.contact-submit-btn-text-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.contact-submit-btn-text-normal,
+.contact-submit-btn-text-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.contact-submit-btn-text-hover {
+  top: -100%;
+}
+
+.contact-submit-btn:hover .contact-submit-btn-text-normal {
+  top: 100%;
+}
+
+.contact-submit-btn:hover .contact-submit-btn-text-hover {
+  top: 0%;
+}

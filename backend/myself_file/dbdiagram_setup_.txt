@@ -1,0 +1,116 @@
+// =====================================================================
+// HỆ THỐNG CƠ SỞ DỮ LIỆU ĐỒNG BỘ TECHVIE (ECOMMERCE ARCHITECTURE)
+// =====================================================================
+
+Table products {
+  id varchar(100) [pk, note: 'Mã chuỗi thiết bị duy nhất. Ví dụ: techvie-book-pro-x']
+  name varchar(255) [not null, note: 'Tên hiển thị sản phẩm']
+  price bigint [not null, note: 'Giá niêm yết (VND) >= 0']
+  category varchar(100) [not null, note: 'Phân loại: Điện thoại, Laptop, Đồng hồ...']
+  image text [note: 'URL hình ảnh sản phẩm']
+  description text [note: 'Mô tả tóm tắt tính năng']
+  specs jsonb [not null, default: '[]', note: 'Mảng JSON chứa thông số kỹ thuật']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+
+  // Đưa index vào bên trong Table
+  indexes {
+    category [name: "idx_products_category"]
+  }
+
+  Note: '''
+    BẢNG SẢN PHẨM (products)
+    -------------------------
+    Mẫu bản ghi JSON thực tế:
+    {
+      "id": "techvie-book-pro-x",
+      "name": "TechVie Book Pro X",
+      "price": 28500000,
+      "category": "Laptop",
+      "specs": [{"label": "Vi xử lý", "value": "TechVie Core S2 Ultra"}]
+    }
+  '''
+}
+
+Table contacts {
+  id int [pk, increment, note: 'Số thứ tự tăng tự động']
+  name varchar(255) [not null, note: 'Họ tên người gửi']
+  email varchar(255) [not null, note: 'Địa chỉ hòm thư nhận phản hồi']
+  subject varchar(255) [not null, note: 'Tiêu đề liên hệ']
+  message text [not null, note: 'Nội dung ý kiến đóng góp']
+  created_at timestamp [default: `now()`]
+
+  // Đưa index vào bên trong Table
+  indexes {
+    email [name: "idx_contacts_email"]
+  }
+
+  Note: '''
+    BẢNG THƯ HÒM THƯ LIÊN HỆ (contacts)
+    ------------------------------------
+    Lưu trữ thông tin từ biểu mẫu góp ý trực tuyến của khách hàng.
+  '''
+}
+
+Table orders {
+  order_id int [pk, increment, note: 'Mã số đơn hàng tự tăng']
+  full_name varchar(255) [not null, note: 'Họ tên người nhận bưu phẩm']
+  phone varchar(50) [not null, note: 'Số điện thoại di động thụ hưởng']
+  email varchar(255) [not null, note: 'Email nhận hoá đơn điện tử']
+  address text [not null, note: 'Địa chỉ chi tiết điểm giao nhận']
+  notes text [note: 'Ghi chú thời gian giao hàng custom']
+  payment_method varchar(50) [not null, note: "Phương thức: 'cod', 'card_online', 'bank_transfer'"]
+  delivery_method varchar(50) [not null, note: "Tốc độ vận tải: 'express', 'standard'"]
+  final_total varchar(100) [not null, note: 'Chuỗi tiền hiển thị tổng hóa đơn (Ví dụ: "28.500.000₫")']
+  status varchar(100) [not null, default: 'Đang lắp ráp chuẩn bị gửi']
+  status_type varchar(50) [not null, default: 'processing', note: "'processing', 'shipping', 'success', 'cancelled'"]
+  created_at timestamp [default: `now()`]
+
+  // Đưa index vào bên trong Table
+  indexes {
+    status_type [name: "idx_orders_status_type"]
+  }
+
+  Note: '''
+    BẢNG SỔ DỮ LIỆU ĐƠN ĐẶT HÀNG (orders)
+    ---------------------------------------
+    Mẫu bản ghi JSON thực tế:
+    {
+      "orderId": 1004,
+      "fullName": "Nguyễn Minh Tiến",
+      "finalTotal": "28.500.000₫",
+      "statusType": "processing"
+    }
+  '''
+}
+
+Table order_items {
+  id int [pk, increment]
+  order_id int [not null, note: 'Tham chiếu đến orders.order_id (ON DELETE CASCADE)']
+  product_id varchar(100) [not null, note: 'Tham chiếu đến products.id']
+  product_name varchar(255) [not null, note: 'Bản sao tên sản phẩm tại thời điểm mua']
+  product_price bigint [not null, note: 'Bản sao giá bán tại thời điểm mua']
+  quantity int [not null, note: 'Số lượng mua, bắt buộc > 0']
+
+  // Đưa index vào bên trong Table
+  indexes {
+    order_id [name: "idx_order_items_order_id"]
+  }
+
+  Note: '''
+    BẢNG CHI TIẾT BƯU KIỆN (order_items)
+    ---------------------------------------
+    Bảng trung gian giải quyết quan hệ Nhiều-Nhiều (N-N) 
+    giữa Đơn hàng (orders) và Sản phẩm (products).
+  '''
+}
+
+// =====================================================================
+// ĐỊNH NGHĨA MỐI QUAN HỆ GIỮA CÁC BẢNG (RELATIONSHIPS)
+// =====================================================================
+
+// Một đơn hàng có thể có nhiều sản phẩm chi tiết bên trong
+Ref: orders.order_id < order_items.order_id [delete: cascade]
+
+// Một sản phẩm có thể xuất hiện trong nhiều chi tiết đơn hàng khác nhau
+Ref: products.id < order_items.product_id

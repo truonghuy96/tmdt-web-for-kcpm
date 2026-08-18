@@ -1,0 +1,24 @@
+name: Deploy Render (CD)
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  deploy-to-render:
+    name: Trigger Render Deployment Webhooks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Backend Render Deploy Hook
+        if: ${{ secrets.RENDER_BACKEND_DEPLOY_HOOK != '' }}
+        run: |
+          echo "Triggering Render Backend automatic deployment..."
+          curl -X POST "${{ secrets.RENDER_BACKEND_DEPLOY_HOOK }}"
+
+      - name: Trigger Frontend Render Deploy Hook
+        if: ${{ secrets.RENDER_FRONTEND_DEPLOY_HOOK != '' }}
+        run: |
+          echo "Triggering Render Frontend automatic deployment..."
+          curl -X POST "${{ secrets.RENDER_FRONTEND_DEPLOY_HOOK }}"
