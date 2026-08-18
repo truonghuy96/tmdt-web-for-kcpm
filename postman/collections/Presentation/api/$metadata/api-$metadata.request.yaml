@@ -1,0 +1,8 @@
+$kind: http-request
+name: api/$metadata
+url: "{{baseUrl}}/api/$metadata"
+method: GET
+headers:
+  Accept: application/json;odata.metadata=minimal;odata.streaming=true
+examples: ./.resources/api-$metadata.resources/examples
+order: 1000

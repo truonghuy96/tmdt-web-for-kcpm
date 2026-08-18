@@ -1,0 +1,9 @@
+$kind: http-request
+name: /api/LeopardProfiles/search
+url: "{{baseUrl}}/api/LeopardProfiles/search?name=string&weight=313.8405920836451"
+method: GET
+queryParams:
+  name: string
+  weight: "313.8405920836451"
+examples: ./.resources/-api-LeopardProfiles-search.resources/examples
+order: 1000

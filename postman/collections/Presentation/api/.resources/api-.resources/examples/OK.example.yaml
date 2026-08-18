@@ -1,0 +1,78 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/api"
+  method: GET
+  headers:
+    - key: Accept
+      value: application/json;odata.metadata=minimal;odata.streaming=true
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "typeAnnotation": {
+          "typeName": "string"
+        },
+        "entitySets": [
+          {
+            "typeAnnotation": {
+              "typeName": "string"
+            },
+            "url": "https://dfKVAx.vdxhcSr,zoAgF4UDUtTUFi3iOWtldMowv7JY",
+            "name": "string",
+            "title": "string"
+          },
+          {
+            "typeAnnotation": {
+              "typeName": "string"
+            },
+            "url": "http://QtMaLoOWaaktmGdWFuvHpYHGw.goozI8ibzTgfffafo3LiLUJXuii,Hgoay0o,vnr86KLglEzFCB3qlXO",
+            "name": "string",
+            "title": "string"
+          }
+        ],
+        "singletons": [
+          {
+            "typeAnnotation": {
+              "typeName": "string"
+            },
+            "url": "http://dvrPXEZwwjolILanUrAAqAgnlETFSO.iqewUoXShXbizfx",
+            "name": "string",
+            "title": "string"
+          },
+          {
+            "typeAnnotation": {
+              "typeName": "string"
+            },
+            "url": "http://thTyL.uxiGZfsoNOZEaPv6s6R.w26f-KjVYuY6AXkDP3nNpw",
+            "name": "string",
+            "title": "string"
+          }
+        ],
+        "functionImports": [
+          {
+            "typeAnnotation": {
+              "typeName": "string"
+            },
+            "url": "http://hDlxEiDungZLTGJIHoDyeSeaqKuVVC.tgtrldOMwukNhLAGwwVJNd0zSd7Amw+e7DzNQ3",
+            "name": "string",
+            "title": "string"
+          },
+          {
+            "typeAnnotation": {
+              "typeName": "string"
+            },
+            "url": "https://SOCRygHaHTzkOfYOufMgPelSRNmaUii.dxgS.dfMU4HsPGmg8FPtG",
+            "name": "string",
+            "title": "string"
+          }
+        ]
+      }
+order: 1000

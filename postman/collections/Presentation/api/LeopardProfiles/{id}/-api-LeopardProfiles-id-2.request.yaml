@@ -1,0 +1,8 @@
+$kind: http-request
+name: /api/LeopardProfiles/:id
+url: "{{baseUrl}}/api/LeopardProfiles/:id"
+method: DELETE
+pathVariables:
+  id: "2076"
+examples: ./.resources/-api-LeopardProfiles-id-2.resources/examples
+order: 3000

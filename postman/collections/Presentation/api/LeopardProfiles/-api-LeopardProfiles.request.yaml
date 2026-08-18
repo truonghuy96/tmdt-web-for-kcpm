@@ -1,0 +1,8 @@
+$kind: http-request
+name: /api/LeopardProfiles
+url: "{{baseUrl}}/api/LeopardProfiles"
+method: GET
+headers:
+  Accept: application/json;odata.metadata=minimal;odata.streaming=true
+examples: ./.resources/-api-LeopardProfiles.resources/examples
+order: 5000

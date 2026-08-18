@@ -1,0 +1,67 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/api/LeopardProfiles/$count"
+  method: GET
+  headers:
+    - key: Accept
+      value: application/json;odata.metadata=minimal;odata.streaming=true
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      [
+        {
+          "leopardProfileId": 4467,
+          "leopardTypeId": 8574,
+          "leopardName": "string",
+          "weight": 7016.693362166555,
+          "characteristics": "string",
+          "careNeeds": "string",
+          "modifiedDate": "1964-08-04T07:11:20.445Z",
+          "leopardType": {
+            "leopardTypeId": 2252,
+            "leopardTypeName": "string",
+            "origin": "string",
+            "description": "string",
+            "leopardProfiles": [
+              {
+                "value": "<Circular reference to #/components/schemas/LeopardProfile detected>"
+              },
+              {
+                "value": "<Circular reference to #/components/schemas/LeopardProfile detected>"
+              }
+            ]
+          }
+        },
+        {
+          "leopardProfileId": 2134,
+          "leopardTypeId": 1865,
+          "leopardName": "string",
+          "weight": 428.88993186917634,
+          "characteristics": "string",
+          "careNeeds": "string",
+          "modifiedDate": "2004-09-24T07:28:03.162Z",
+          "leopardType": {
+            "leopardTypeId": 2854,
+            "leopardTypeName": "string",
+            "origin": "string",
+            "description": "string",
+            "leopardProfiles": [
+              {
+                "value": "<Circular reference to #/components/schemas/LeopardProfile detected>"
+              },
+              {
+                "value": "<Circular reference to #/components/schemas/LeopardProfile detected>"
+              }
+            ]
+          }
+        }
+      ]
+order: 1000

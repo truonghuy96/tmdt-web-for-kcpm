@@ -1,0 +1,17 @@
+$kind: http-request
+name: /api/LeopardProfiles/search-paging
+url: "{{baseUrl}}/api/LeopardProfiles/search-paging"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "currentPage": 8511,
+      "pageSize": 7707,
+      "name": "string",
+      "weight": "string"
+    }
+examples: ./.resources/-api-LeopardProfiles-search-paging.resources/examples
+order: 1000

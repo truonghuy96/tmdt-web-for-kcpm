@@ -1,0 +1,109 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/api/$metadata"
+  method: GET
+  headers:
+    - key: Accept
+      value: application/json;odata.metadata=minimal;odata.streaming=true
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "schemaElements": [
+          {
+            "name": "string",
+            "schemaElementKind": 2,
+            "namespace": "string"
+          },
+          {
+            "name": "string",
+            "schemaElementKind": 4,
+            "namespace": "string"
+          }
+        ],
+        "vocabularyAnnotations": [
+          {
+            "qualifier": "string",
+            "term": {
+              "name": "string",
+              "schemaElementKind": 1,
+              "namespace": "string",
+              "type": {
+                "isNullable": true,
+                "definition": {
+                  "typeKind": 0
+                }
+              },
+              "appliesTo": "string",
+              "defaultValue": "string"
+            },
+            "target": {},
+            "value": {
+              "expressionKind": 22
+            }
+          },
+          {
+            "qualifier": "string",
+            "term": {
+              "name": "string",
+              "schemaElementKind": 1,
+              "namespace": "string",
+              "type": {
+                "isNullable": false,
+                "definition": {
+                  "typeKind": 9
+                }
+              },
+              "appliesTo": "string",
+              "defaultValue": "string"
+            },
+            "target": {},
+            "value": {
+              "expressionKind": 3
+            }
+          }
+        ],
+        "referencedModels": [
+          {
+            "value": "<Circular reference to #/components/schemas/IEdmModel detected>"
+          },
+          {
+            "value": "<Circular reference to #/components/schemas/IEdmModel detected>"
+          }
+        ],
+        "declaredNamespaces": [
+          "string",
+          "string"
+        ],
+        "directValueAnnotationsManager": {},
+        "entityContainer": {
+          "name": "string",
+          "schemaElementKind": 4,
+          "namespace": "string",
+          "elements": [
+            {
+              "name": "string",
+              "containerElementKind": 0,
+              "container": {
+                "value": "<Circular reference to #/components/schemas/IEdmEntityContainer detected>"
+              }
+            },
+            {
+              "name": "string",
+              "containerElementKind": 1,
+              "container": {
+                "value": "<Circular reference to #/components/schemas/IEdmEntityContainer detected>"
+              }
+            }
+          ]
+        }
+      }
+order: 1000

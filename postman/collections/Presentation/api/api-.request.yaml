@@ -1,0 +1,8 @@
+$kind: http-request
+name: api/
+url: "{{baseUrl}}/api"
+method: GET
+headers:
+  Accept: application/json;odata.metadata=minimal;odata.streaming=true
+examples: ./.resources/api-.resources/examples
+order: 4000
